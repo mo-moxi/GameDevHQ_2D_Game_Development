@@ -25,7 +25,8 @@ public class Missile : MonoBehaviour
         }
         else                                            // miss-fire: move up
         {
-            transform.Translate(Vector3.up * _speed * Time.deltaTime);
+            _speed *= Time.deltaTime;
+            transform.Translate(Vector3.up * _speed );
             if (transform.position.y > _range || 
             transform.position.x > _range || transform.position.x < -_range)
             Destroy(this.gameObject); 
