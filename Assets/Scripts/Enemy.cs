@@ -169,6 +169,10 @@ public class Enemy : MonoBehaviour
             {
                 _enemyShield.SetActive(false);
                 _enemyShieldActive = false;
+                if (other.tag != "Player")
+                {
+                    Destroy(other.gameObject);
+                }
                 Explosion();
                 return;
             }
