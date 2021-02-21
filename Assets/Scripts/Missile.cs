@@ -25,8 +25,7 @@ public class Missile : MonoBehaviour
         }
         else                                            // miss-fire: move up
         {
-            _speed *= Time.deltaTime;
-            transform.Translate(Vector3.up * _speed );
+            transform.Translate(Vector3.up * Time.deltaTime * _speed );
             if (transform.position.y > _range || 
             transform.position.x > _range || transform.position.x < -_range)
             Destroy(this.gameObject); 
@@ -38,10 +37,11 @@ public class Missile : MonoBehaviour
     }
     private void RotateTowards(Vector2 _target)
     {
-        var offset = -90f;
-        Vector2 direction = _target - (Vector2)transform.position;
+        float offset = -90f;
+        var direction = _target - (Vector2)transform.position;
         direction.Normalize();
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(Vector3.forward * (angle + offset));  
+        var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Quaternion targetLocation = Quaternion.Euler(Vector3.forward * (angle + offset));
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetLocation, 0.5f);
     }
 }

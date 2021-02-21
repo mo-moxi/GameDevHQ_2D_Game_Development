@@ -3,7 +3,17 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Radar
+  - Asteroid
+  - Enemy
+  - Enemy_Mine
+  - Powerup
+  - Negative_Powerup
+  - Laser
+  - Missile
+  - Enemy_Laser
+  - Enemy_Missile
   layers:
   - Default
   - TransparentFX
@@ -13,7 +23,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Post Processing
   - 
   - 
   - 

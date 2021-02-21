@@ -41,7 +41,8 @@ public class Enemy_Turret : MonoBehaviour
         var direction = target - (Vector2)transform.position;
         direction.Normalize();
         var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(Vector3.forward * (angle + offset));
+        Quaternion targetLocation = Quaternion.Euler(Vector3.forward * (angle + offset));
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetLocation, 0.5f);
     }
     private void FireRocket()
     {
