@@ -35,7 +35,7 @@ public class Powerup : MonoBehaviour
         }
         if (_recallActive == false)
         {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+            transform.Translate(Vector3.down * _speed * Time.deltaTime);
         }
         if (transform.position.y < -5.0f)
         {
@@ -47,10 +47,10 @@ public class Powerup : MonoBehaviour
         while(_recallActive == true)
         { 
             if(_playerTransform == null)
-        {
-        break;
-        }
-        transform.position = Vector2.MoveTowards(transform.position, _playerTransform.position, _speed * Time.deltaTime);
+            {
+                break;
+            }
+            transform.position = Vector2.MoveTowards(transform.position, _playerTransform.position, _speed * Time.deltaTime);
         yield return null;
         }
     }

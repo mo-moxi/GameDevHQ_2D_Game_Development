@@ -83,7 +83,7 @@ public class SpawnManager : MonoBehaviour
     }
     IEnumerator SpawnMinefieldRoutine()
     {   
-        while(_stopSpawning == false && _mothership == true) // spawn enemy minefield when wave count > 3 
+        while(_stopSpawning == false && _mothership == false) // spawn enemy minefield when wave count > 3 
         {  
             float[] mineXPos = {-3f, 3f};
             for (int i=0; i < mineXPos.Length; i++)

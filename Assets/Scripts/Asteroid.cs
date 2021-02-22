@@ -29,7 +29,7 @@ public class Asteroid : MonoBehaviour
         {
             Destroy(other.gameObject);
             Instantiate(_explosion, transform.position, Quaternion.identity);
-            AudioManager.Instance.PlayPowerDown();
+            AudioManager.Instance.PlayExplosion();
             _spawnManager.StartSpawning();
             Destroy(this.gameObject);
         }

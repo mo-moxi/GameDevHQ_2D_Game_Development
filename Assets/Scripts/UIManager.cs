@@ -17,8 +17,6 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _gameOver;
     [SerializeField]
-    private Text _restartText;
-    [SerializeField]
     private Image _thrusterSprite;
     [SerializeField]
     private Image _sceneFadeImage;
@@ -52,14 +50,11 @@ public class UIManager : MonoBehaviour
     {
         _scoreText.text = "Score: " + 0;
         _gameOver.gameObject.SetActive(false);
-        _restartText.gameObject.SetActive(false);
         _audio = GetComponent<AudioSource>();
         _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
         StartCoroutine(FadeImage(true));
         if(_gameManager == null)
-        {
             Debug.LogError("GameManager is null");
-        }
         _sceneFadeImage.gameObject.SetActive(true); //enable image fade effect 
     }
     public void RotateRadarImageSpeed(float radarScanSpeed)
@@ -154,9 +149,8 @@ public class UIManager : MonoBehaviour
     void GameOver()
     {   
         _isGameOver = true;
-        _gameManager.GameOver();
+    //    _gameManager.GameOver();
         _gameOver.gameObject.SetActive(true);
-        _restartText.gameObject.SetActive(true);
         _audio.Stop();
         StartCoroutine(FadeImage(false));
         StartCoroutine(GameOverFlicker());
@@ -212,7 +206,7 @@ public class UIManager : MonoBehaviour
         if (fade)
         {
             // fade in over 2 second
-            for (float i = 2; i >= 0; i -= Time.deltaTime)
+            for (float i = 1; i >= 0; i -= Time.deltaTime)
             {
                 // set color with i as alpha
                 _sceneFadeImage.color = new Color(0, 0, 0, i);
@@ -223,7 +217,7 @@ public class UIManager : MonoBehaviour
         else
         {
             // fade in over 2 second
-            for (float i = 0; i <= 1.5; i += Time.deltaTime)
+            for (float i = 0; i <= 1; i += Time.deltaTime)
             {
                 // set color with i as alpha
                 _sceneFadeImage.color = new Color(0, 0, 0, i);

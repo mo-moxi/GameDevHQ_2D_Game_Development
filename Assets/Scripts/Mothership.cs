@@ -27,6 +27,7 @@ public class Mothership : MonoBehaviour
     private SpawnManager _spawnManager;
     private Vector3 _startPosition;
     private CircleCollider2D _shieldCollider;
+    private bool _shieldReduce;
 
     private void Start()
     {
@@ -40,7 +41,7 @@ public class Mothership : MonoBehaviour
             Debug.LogError("Audio Manager is null!");
         if (_uiManager == null)
             Debug.LogError("UI Manager is null!");
-        if(_shieldCollider !=null)
+        if(_shieldCollider == null)
             Debug.LogError("Shield Collider null!");
     }
     private void Update()
@@ -90,22 +91,30 @@ public class Mothership : MonoBehaviour
             if (_enemyShieldCount < 1)
             {
                 _enemyShield.SetActive(false);
-                _shieldCollider.radius = 1f;        // reduce collider to ship body
+                if(_shieldReduce == false)
+                    ShieldSize();
                 DamageMothership();
             }
             if (other.tag == "Player")
-                {
+            {
                 other.GetComponent<Player>().Damage();
-                }
+            }
             if (other.tag != "Player")
             {
                 Destroy(other.gameObject);
             }
-                var _explodePoint = other.transform.position;               // get collision point
+            var _explodePoint = other.transform.position;               // get collision point
                 Instantiate(_explosion, _explodePoint, Quaternion.identity);
                 AudioManager.Instance.PlayExplosion();
         }
     }
+    public void ShieldSize()
+    {
+        _shieldReduce = true;
+        _shieldCollider.radius = 1f;                        // reduce collider to ship body
+        _shieldCollider.offset = new Vector2(0, 0);
+    }
+
     private void UpdatePlayerScore()
     {
         var playerScore = Random.Range(10, 40);
@@ -134,6 +143,6 @@ public class Mothership : MonoBehaviour
             Instantiate(_explosion, _explodePoint, Quaternion.identity);
             yield return new WaitForSeconds(.2f);
         }
-            EndGame();
+        EndGame();
         }
 }
