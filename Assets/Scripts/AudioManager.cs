@@ -1,33 +1,52 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class AudioManager : MonoBehaviour
-{ 
-  [SerializeField]
-  private float _audioDuration = 2.7f;
-  [SerializeField]
-  private AudioClip _explosion, _powerup, _powerdown;
-  private AudioSource _audio;
- 
-  private void Start()
+{
+  private static AudioManager _instance;
+
+  public static AudioManager Instance
   {
-    _audio = GetComponent<AudioSource>();
-    if(_audio == null)
+    get
     {
-    Debug.LogError("Audio manager is null");
+      if(_instance == null)
+      {
+        Debug.Log("Audio Manager is Null.");
+      }
+      return _instance;
     }
   }
+  void Awake()
+  {
+    _instance = this;
+  }
+
+  [SerializeField]
+  private AudioClip explosion, powerup, powerdown;
+  [SerializeField]
+  private float audioDuration;
+  [SerializeField]
+  private AudioSource sfxSource;
+
   public void PlayExplosion()
     {
-      _audio.PlayOneShot(_explosion, _audioDuration);
+      sfxSource.PlayOneShot(explosion, audioDuration);
     }
   public void PlayPowerUp()
     {
-      _audio.PlayOneShot(_powerup, _audioDuration);
+      sfxSource.PlayOneShot(powerup, audioDuration);
     }
   public void PlayPowerDown()
     {
-      _audio.PlayOneShot(_powerdown, _audioDuration);
+      sfxSource.PlayOneShot(powerdown, audioDuration);
     }
+
+  private void Update()
+  {
+    if(Input.GetKeyDown(KeyCode.A))
+      PlayExplosion();
+  }
 }

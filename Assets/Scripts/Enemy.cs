@@ -33,7 +33,6 @@ public class Enemy : MonoBehaviour
     private GameObject _enemyLaser;
     [SerializeField]
     private GameObject _explosion;
-    private AudioManager _audioManager;                 // audio manager
     private UIManager _uiManager;                       // UI Manager
     private Player _player;                             // Player
     private Transform _playerTransform;
@@ -44,7 +43,6 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        _audioManager = GameObject.Find("Audio_Manager").GetComponent<AudioManager>();
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _playerTransform = GameObject.Find("Player").GetComponent<Transform>();
@@ -53,8 +51,6 @@ public class Enemy : MonoBehaviour
         _destinationX = Random.Range(-_xRange, _xRange);
         if (_spawnManager == null)
             Debug.LogError("Spawn Manager is null");
-        if (_audioManager == null)
-            Debug.LogError("Audio Manager is null");
         if (_uiManager == null)
             Debug.LogError("UI Manager is null");
         if (_playerTransform == null)
@@ -192,7 +188,7 @@ public class Enemy : MonoBehaviour
     private void Explosion()
     {
         Instantiate(_explosion, transform.position, Quaternion.identity);
-        _audioManager.PlayExplosion();
+        AudioManager.Instance.PlayExplosion();
     }
     private void OnEnemyDeath()
     {   

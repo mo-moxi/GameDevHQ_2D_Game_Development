@@ -23,7 +23,6 @@ public class Mothership : MonoBehaviour
     private GameObject _explosion;
     [SerializeField]
     private GameObject _enemyShield;
-    private AudioManager _audioManager;
     private UIManager _uiManager;
     private SpawnManager _spawnManager;
     private Vector3 _startPosition;
@@ -31,15 +30,12 @@ public class Mothership : MonoBehaviour
 
     private void Start()
     {
-        _audioManager = GameObject.Find("Audio_Manager").GetComponent<AudioManager>();
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _shieldCollider = gameObject.GetComponent<CircleCollider2D>();
         _destinationY = Random.Range(0, _yRange);
         _startPosition = transform.position;
 
-        if (_audioManager == null)
-            Debug.LogError("Audio Manager is null!");
         if (_spawnManager == null)
             Debug.LogError("Audio Manager is null!");
         if (_uiManager == null)
@@ -107,7 +103,7 @@ public class Mothership : MonoBehaviour
             }
                 var _explodePoint = other.transform.position;               // get collision point
                 Instantiate(_explosion, _explodePoint, Quaternion.identity);
-                _audioManager.PlayExplosion();
+                AudioManager.Instance.PlayExplosion();
         }
     }
     private void UpdatePlayerScore()
@@ -129,7 +125,7 @@ public class Mothership : MonoBehaviour
     }
     IEnumerator ExplodeSequence()                                // mothership explosion sequence
         {
-        _audioManager.PlayExplosion();
+        AudioManager.Instance.PlayExplosion();
         for (int i = 0; i < 15; i++)
         {
             var xOffset = Random.Range(-2f, 2f);

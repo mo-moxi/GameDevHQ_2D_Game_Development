@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028355, g: 0.22571374, b: 0.30692255, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1582,11 +1582,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_audioClip: {fileID: 8300000, guid: 5b17a0088dcdf924fa92da5af1e1be07, type: 3}
+  m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1695,10 +1695,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f79c9550b3730bb30a784c67e5a5108c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioDuration: 2.7
-  _explosion: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
-  _powerup: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
-  _powerdown: {fileID: 8300000, guid: 3b3c5da8e1542c5f1a2df551b229f0eb, type: 3}
+  explosion: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
+  powerup: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
+  powerdown: {fileID: 8300000, guid: 3b3c5da8e1542c5f1a2df551b229f0eb, type: 3}
+  audioDuration: 2.7
+  sfxSource: {fileID: 1092632869}
 --- !u!1 &1214010576
 GameObject:
   m_ObjectHideFlags: 0
@@ -2321,7 +2322,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1556735240
 Transform:
   m_ObjectHideFlags: 0
@@ -2900,7 +2901,7 @@ MonoBehaviour:
   _canFire: 0
   _shieldLevel: 0
   _laserCount: 15
-  _missileCount: 51
+  _missileCount: 312
   _laserBurstCount: 0
   _lives: 3
   _laserPrefab: {fileID: 8400780286298577385, guid: 8f9cd0f38238b17c78b99a43e80f237f,

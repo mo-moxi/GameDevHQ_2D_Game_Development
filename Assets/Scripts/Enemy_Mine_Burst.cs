@@ -5,22 +5,17 @@ using UnityEngine;
 public class Enemy_Mine_Burst : MonoBehaviour
 {
     [SerializeField]
-    private float _mineRange = 9f;
-    private float _mineRangeY;
-    private float _vectorSpeed = 3f;
+    private float _mineRangeX = 11f;
+    private float _mineRangeY  = 5f;
+    private float _vectorSpeed = 0.3f;
     [SerializeField]
     private int _mineID;
     [SerializeField]
     private GameObject _explosion;
-    private AudioManager _audioManager;
-
-    private void Start()
+    
+    private void OnEnable()
     {
-        _audioManager = GameObject.Find("Audio_Manager").GetComponent<AudioManager>();
-        if (_audioManager == null)
-            Debug.LogError("Audio Manager is null");
         _vectorSpeed = _vectorSpeed * Time.deltaTime;
-        _mineRangeY = Random.Range(1.5f, 5f);
     }
     private void Update()
     {
@@ -42,15 +37,14 @@ public class Enemy_Mine_Burst : MonoBehaviour
                 transform.Translate(Vector3.right * _vectorSpeed);
                 break;
         }
-        if (transform.position.y < -_mineRangeY || transform.position.x < -_mineRange || transform.position.x > _mineRange)
+        if (transform.position.y < -_mineRangeY || transform.position.x < -_mineRangeX || transform.position.x > _mineRangeX)
         {
             DestroyMine();
         }
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Hit: " + other.tag);
-        //Damamge player on collision
+          //Damamge player on collision
         if (other.tag == "Player")
         {
             other.GetComponent<Player>().Damage();
@@ -59,14 +53,15 @@ public class Enemy_Mine_Burst : MonoBehaviour
         // Player has 50/50 chance of destroying mine.
         if (other.tag == "Laser" && Random.value > 0.5f || other.tag == "Missile")
         {
+            Destroy(other.gameObject);
             DestroyMine();
+            AudioManager.Instance.PlayExplosion();
         }
     }
     void DestroyMine()
     {
         Instantiate(_explosion, transform.position, Quaternion.identity);
-        _audioManager.PlayExplosion();
+        AudioManager.Instance.PlayExplosion();
         Destroy(this.gameObject);
     }
 }
-

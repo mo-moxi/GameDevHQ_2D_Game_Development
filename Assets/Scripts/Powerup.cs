@@ -13,17 +13,12 @@ public class Powerup : MonoBehaviour
     [SerializeField]
     private int _laserRefill = 7;
     private bool _recallActive;
-    private AudioManager _audioManager;
     [SerializeField]
-    private Player _player;
     private Transform _playerTransform;
 
     private void Start()
     {
-    _audioManager = GameObject.Find("Audio_Manager").GetComponent<AudioManager>();
     _playerTransform = GameObject.Find("Player").GetComponent<Transform>(); 
-    if (_audioManager == null)
-        Debug.Log("Audio Manager is null!");
     if (_playerTransform == null)
         Debug.Log("Audio Manager is null!");
     }
@@ -50,7 +45,11 @@ public class Powerup : MonoBehaviour
     IEnumerator AutoCollect() 
     {
         while(_recallActive == true)
+        { 
+            if(_playerTransform == null)
         {
+        break;
+        }
         transform.position = Vector2.MoveTowards(transform.position, _playerTransform.position, _speed * Time.deltaTime);
         yield return null;
         }
@@ -60,7 +59,6 @@ public class Powerup : MonoBehaviour
                 {
                     Destroy(this.gameObject);
                 }
-
             if (other.tag == "Player")
             {
             Player player = other.transform.GetComponent<Player>();
@@ -68,11 +66,11 @@ public class Powerup : MonoBehaviour
             {    
                 if (_powerupID == 6)
                 {
-                    _audioManager.PlayPowerDown();
+                    AudioManager.Instance.PlayPowerDown();
                 }
                 else
                 {
-                    _audioManager.PlayPowerUp();
+                    AudioManager.Instance.PlayPowerUp();
                 }
                 switch(_powerupID)
                 {

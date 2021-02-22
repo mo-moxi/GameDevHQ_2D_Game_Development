@@ -9,20 +9,14 @@ public class Asteroid : MonoBehaviour
     [SerializeField]
     private GameObject _explosion;
     private SpawnManager _spawnManager;
-    private AudioManager _audioManager;
 
     private void Start()
     {
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
-        _audioManager = GameObject.Find("Audio_Manager").GetComponent<AudioManager>();
 
         if (_spawnManager == null)
         {
             Debug.LogError("The Spawn Manager is null");
-        }
-        if (_audioManager == null)
-        {
-            Debug.LogError("The Audio Manager is null");
         }
     }
     private void Update()
@@ -35,7 +29,7 @@ public class Asteroid : MonoBehaviour
         {
             Destroy(other.gameObject);
             Instantiate(_explosion, transform.position, Quaternion.identity);
-            _audioManager.PlayExplosion();
+            AudioManager.Instance.PlayPowerDown();
             _spawnManager.StartSpawning();
             Destroy(this.gameObject);
         }

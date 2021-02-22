@@ -48,7 +48,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     private AudioClip _missile_shot;
     private AudioSource _audio;
-    private AudioManager _audioManager;
     [SerializeField]
     private CameraShake _mainCameraShake;
 
@@ -58,7 +57,6 @@ public class Player : MonoBehaviour
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audio = GetComponent<AudioSource>();
-        _audioManager = GameObject.Find("Audio_Manager").GetComponent<AudioManager>();
         _mainCameraShake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
         _uiManager.MissileSprite(_missileCount);
 
@@ -68,8 +66,6 @@ public class Player : MonoBehaviour
             Debug.Log("The UI Manager is NULL");
         if (_audio == null)
             Debug.LogError("Audio source is NULL");
-        if (_audioManager == null)
-            Debug.LogError("Audio Manager is NULL");
         if (_mainCameraShake == null)
             Debug.LogError("Main Camera transform is NULL");
     }
@@ -188,7 +184,7 @@ public class Player : MonoBehaviour
     private void Explosion()
     {
         Instantiate(_explosion, this.transform.position, Quaternion.identity);
-        _audioManager.PlayExplosion();
+        AudioManager.Instance.PlayExplosion();
     }
     public void Lives(int livesUpdate)              // update live level
     {   
@@ -232,9 +228,9 @@ public class Player : MonoBehaviour
         {
             _speed *= _speedMultiplier;
             _speedBoost = true;
-            _thruster.transform.localScale = new Vector3(0.75f,1.1f,1f);    // increase thrust image size
+            _thruster.transform.localScale = new Vector3(0.5f,1.1f,1f);    // increase thrust image size
             _uiManager.ThrusterImage(true);                                 // enable UI thruster icon
-            _audioManager.PlayPowerUp();
+            AudioManager.Instance.PlayPowerUp();
             StartCoroutine(SpeedBoostPowerDown());
         }
     }
@@ -244,6 +240,7 @@ public class Player : MonoBehaviour
         _thruster.transform.localScale = new Vector3(0.3f,0.8f,1f);         // reduce thrust image size
         _speedBoost = false;
         _speed /= _speedMultiplier;
+        AudioManager.Instance.PlayPowerDown();
         _uiManager.ThrusterImage(false);                                    // disable UI thruster icon
     }
     public void ShieldActive(int shieldUpdate)                              // update shield level

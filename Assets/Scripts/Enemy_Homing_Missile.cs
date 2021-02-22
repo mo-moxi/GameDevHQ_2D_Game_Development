@@ -12,19 +12,13 @@ public class Enemy_Homing_Missile : MonoBehaviour
     [SerializeField]
     public GameObject _explosion;
     private Transform _player;
-    private AudioManager _audioManager;
 
     private void Start()
     {
-        _audioManager = GameObject.Find("Audio_Manager").GetComponent<AudioManager>();
         _player = GameObject.Find("Player").GetComponent<Transform>();
         if (_player == null)
         {
             Debug.LogError("Player does not exist!");
-        }
-        if (_audioManager == null)
-        {
-            Debug.LogError("Audio Manager does not exist!");
         }
         _timeToLive = Time.time + _lifeDuration;        // missile live duration
     }
@@ -69,7 +63,7 @@ public class Enemy_Homing_Missile : MonoBehaviour
     private void OnEnemyDeath()
     {   
         Instantiate(_explosion, transform.position, Quaternion.identity);
-        _audioManager.PlayExplosion();
+        AudioManager.Instance.PlayExplosion();
         Destroy(this.gameObject);
     }
 }
