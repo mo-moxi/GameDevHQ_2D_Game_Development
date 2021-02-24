@@ -48,12 +48,14 @@ public class Player : MonoBehaviour
     [SerializeField]
     private AudioClip _missile_shot;
     private AudioSource _audio;
+    private Animator _playerAnimator;
     [SerializeField]
     private CameraShake _mainCameraShake;
 
     private void Start()
     {
         transform.position = new Vector3(0, 0, 0);
+        _playerAnimator = gameObject.GetComponent<Animator>();
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audio = GetComponent<AudioSource>();
@@ -99,9 +101,11 @@ public class Player : MonoBehaviour
     {
         var horizontalInput = Input.GetAxis("Horizontal");
         var verticalInput = Input.GetAxis("Vertical");
+        _playerAnimator.SetFloat("horizontalInput", horizontalInput);
         if (Input.GetKeyDown(KeyCode.LeftShift) && _speedBoost != true) // check for speed boost key press
             {
                 SpeedBoostActive();
+                AudioManager.Instance.PlayPowerUp();
             } 
         var direction = new Vector3(horizontalInput, verticalInput, 0);
         transform.Translate(direction * _speed * Time.deltaTime);
@@ -163,7 +167,7 @@ public class Player : MonoBehaviour
     {
         if(_missileCount > 0)
         {
-            Instantiate(_missilePrefab, transform.position + new Vector3(0, 1.5f, 0), Quaternion.identity);
+            Instantiate(_missilePrefab, transform.position + new Vector3(0, 1f, 0), Quaternion.identity);
             _audio.PlayOneShot(_missile_shot, 1.4f);
             _missileCount -=1;
             _uiManager.MissileSprite(_missileCount); // update UI missile count
@@ -179,7 +183,7 @@ public class Player : MonoBehaviour
         }        
         Lives(-1);                                  // decrease life count
         Explosion();
-        _mainCameraShake.shakecamera();             // shake camera when ship is hit
+        _mainCameraShake.ShakeCamera();             // shake camera when ship is hit
     }
     private void Explosion()
     {
@@ -215,11 +219,13 @@ public class Player : MonoBehaviour
     public void TripleShotActive()
     {
         _isTripleShotActive = true;
+        _uiManager.TripleShot(true);
         StartCoroutine(TripleShotPowerDown());
     }
     IEnumerator TripleShotPowerDown()
     {
         yield return new WaitForSeconds(5.0f);
+        _uiManager.TripleShot(false); 
         _isTripleShotActive = false;
     }
     public void SpeedBoostActive()
@@ -230,7 +236,6 @@ public class Player : MonoBehaviour
             _speedBoost = true;
             _thruster.transform.localScale = new Vector3(0.5f,1.1f,1f);    // increase thrust image size
             _uiManager.ThrusterImage(true);                                 // enable UI thruster icon
-            AudioManager.Instance.PlayPowerUp();
             StartCoroutine(SpeedBoostPowerDown());
         }
     }
@@ -240,7 +245,6 @@ public class Player : MonoBehaviour
         _thruster.transform.localScale = new Vector3(0.3f,0.8f,1f);         // reduce thrust image size
         _speedBoost = false;
         _speed /= _speedMultiplier;
-        AudioManager.Instance.PlayPowerDown();
         _uiManager.ThrusterImage(false);                                    // disable UI thruster icon
     }
     public void ShieldActive(int shieldUpdate)                              // update shield level

@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField]
-    private float _mineYRange = 3f;         // enmey minefiled Y limit
-    [SerializeField]
+  [SerializeField]
     private float _spawnDelay = 8f;
     [SerializeField]
     private int _xRange = 8;                // X spawn range
@@ -30,7 +28,6 @@ public class SpawnManager : MonoBehaviour
     {   
         StartCoroutine(SpawnEnemyRoutine());        // spawn enemy routine
         StartCoroutine(SpawnPowerupRoutine());      // spawn powerup routine
-        StartCoroutine(SpawnMinefieldRoutine());    // spawn enemy minefield routine
     }
 
     IEnumerator SpawnEnemyRoutine()     // cycle / spawn 2 ships in 3 waves
@@ -48,14 +45,9 @@ public class SpawnManager : MonoBehaviour
                 _spawnDelay +=3;        // add 3 seconds to spawn delay
                 Mothership();           // spawn mothership on level 7
             }
-            if (_enemyWave < 3)         // choose enemy type by wave level
-            {
-                _enemy = 0;             // set enemy to Y-Wing
-            }
-            else
-            {
-                _enemy = 1 ;            // set enemy to X-Wing
-            }
+            if (_enemyWave < 3) _enemy = 0;        // choose enemy type by wave level
+            else _enemy = 1 ;            // set enemy to X-Wing
+            
             Vector3 posToSpawn = new Vector3(Random.Range(-_xRange, _xRange), _xRange, 0f);
             GameObject newEnemy = Instantiate(_enemyPrefabs[_enemy], posToSpawn, Quaternion.identity);
             newEnemy.transform.parent = _enemyContainer.transform;
@@ -69,31 +61,16 @@ public class SpawnManager : MonoBehaviour
         { 
             Vector3 posToSpawn = new Vector3(Random.Range(-_xRange, _xRange), _xRange, 0f);
             int randomPowerup = Random.Range(1, _powerupPrefabs.Length);
-        if (_lowLaserCount < 5) // spawn laser refill on lower laser count
-        {
-            randomPowerup = 4;
-        }
-        if (_lowLifeCount < 2 && Random.value >= 0.7f) // spawn life power up at 1 and chance > 0.75
-        {
-            randomPowerup = 0;
-        }
+            
+        if (_lowLaserCount < 5) randomPowerup = 4;// spawn laser refill on lower laser count
+        
+        if (_lowLifeCount < 2 && Random.value >= 0.75f) randomPowerup = 0;// spawn life power up at 1 and chance > 0.75
+
         Instantiate(_powerupPrefabs[randomPowerup], posToSpawn, Quaternion.identity);
         yield return new WaitForSeconds(Random.Range(3, _spawnDelay));
         }  
     }
-    IEnumerator SpawnMinefieldRoutine()
-    {   
-        while(_stopSpawning == false && _mothership == false) // spawn enemy minefield when wave count > 3 
-        {  
-            float[] mineXPos = {-3f, 3f};
-            for (int i=0; i < mineXPos.Length; i++)
-            { 
-                Vector3 posToSpawn = new Vector3(mineXPos[i], _mineYRange, 0f);    
-                Instantiate(_enemyPrefabs[3], posToSpawn, Quaternion.identity);
-            }
-            yield return new WaitForSeconds(Random.Range(16, 32));
-        }  
-    }
+
     public void OnPlayerDeath()                 // stop spawning on player death
     {
         _stopSpawning = true;

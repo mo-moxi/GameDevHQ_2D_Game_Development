@@ -1,20 +1,20 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraShake : MonoBehaviour
 {
-    [SerializeField]
-    private float shakeDuration = 1f;
-    [SerializeField]
-    private float shakeAmount = 0.7f;
-    [SerializeField]
-    private float decreaseFactor = 1.0f;
-    private bool shaketrue = false;
-    [SerializeField]
+    // Transform of the camera to shake. Grabs the gameObject's transform if null.
     private Transform camTransform;
-    private Vector3 _originalPos;
-
+	
+    // How long the object should shake for.
+    private float shakeDuration = 0.5f;
+	
+    // Amplitude of the shake. A larger value shakes the camera harder.
+    private float shakeAmount = 0.7f;
+    private float decreaseFactor = 1.0f;
+    private Vector3 originalPos;
+    private bool shakeCam;
     private void Awake()
     {
         if (camTransform == null)
@@ -22,30 +22,30 @@ public class CameraShake : MonoBehaviour
             camTransform = GetComponent(typeof(Transform)) as Transform;
         }
     }
-
     private void OnEnable()
     {
-        _originalPos = camTransform.localPosition;
+        originalPos = camTransform.localPosition;
     }
-
     private void Update()
     {
-        if (shaketrue)
+        if(shakeCam == true)
         {
-            if (shakeDuration > 0)
-            {
-                camTransform.localPosition = _originalPos + Random.insideUnitSphere * shakeAmount;
-                shakeDuration -= Time.deltaTime * decreaseFactor;
-            }
-            else
-            {
-                camTransform.localPosition = _originalPos;
-                shaketrue = false;
-            }
+        if (shakeDuration > 0f )
+        {
+            camTransform.localPosition = originalPos + Random.insideUnitSphere * shakeAmount;
+			
+            shakeDuration -= Time.deltaTime * decreaseFactor;
+        }
+        else
+        {
+            shakeDuration = 0.5f;
+            camTransform.localPosition = originalPos;
+            shakeCam = false;
+        }
         }
     }
-    public void shakecamera()
+    public void ShakeCamera()
     {
-        shaketrue = true;
+       shakeCam = true;
     }
 }

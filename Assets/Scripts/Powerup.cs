@@ -64,11 +64,7 @@ public class Powerup : MonoBehaviour
             Player player = other.transform.GetComponent<Player>();
             if(player !=null)                                       // check player is active
             {    
-                if (_powerupID == 6)
-                {
-                    AudioManager.Instance.PlayPowerDown();
-                }
-                else
+                if (_powerupID != 6)
                 {
                     AudioManager.Instance.PlayPowerUp();
                 }
@@ -95,6 +91,7 @@ public class Powerup : MonoBehaviour
                     case 6:
                     player.LaserRefill(_laserRefill);
                     player.Damage();
+                    AudioManager.Instance.PlayPowerDown();
                     break;
                     case 7:
                     player.MissileCount();
@@ -103,7 +100,7 @@ public class Powerup : MonoBehaviour
                     break;
                 }
             }
-            Destroy(this.gameObject);
-        }
+            Destroy(this.gameObject); 
+            }
     }
 }

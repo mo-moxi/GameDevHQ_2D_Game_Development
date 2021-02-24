@@ -35,18 +35,12 @@ public class AudioManager : MonoBehaviour
     {
       sfxSource.PlayOneShot(explosion, audioDuration);
     }
-  public void PlayPowerUp()
+    public void PlayPowerUp()
     {
       sfxSource.PlayOneShot(powerup, audioDuration);
     }
-  public void PlayPowerDown()
+    public void PlayPowerDown()
     {
       sfxSource.PlayOneShot(powerdown, audioDuration);
     }
-
-  private void Update()
-  {
-    if(Input.GetKeyDown(KeyCode.A))
-      PlayExplosion();
   }
-}

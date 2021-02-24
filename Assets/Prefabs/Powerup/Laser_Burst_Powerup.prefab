@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 8064952866670443449}
   - component: {fileID: 8064952866670443448}
   - component: {fileID: 8064952866670443451}
-  - component: {fileID: 8064952866670443450}
   - component: {fileID: 8401317578193050953}
   - component: {fileID: 1399487787}
+  - component: {fileID: 8528890524316459909}
   m_Layer: 0
   m_Name: Laser_Burst_Powerup
   m_TagString: Powerup
@@ -101,27 +101,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.17238235}
   serializedVersion: 2
   m_Radius: 1.0468707
---- !u!50 &8064952866670443450
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8064952866670443447}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!114 &8401317578193050953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,3 +137,24 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!50 &8528890524316459909
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8064952866670443447}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

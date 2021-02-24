@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Mothership : MonoBehaviour
 {
-
     [SerializeField]
     private float _speed = 0.5f;
     [SerializeField]
@@ -23,6 +22,8 @@ public class Mothership : MonoBehaviour
     private GameObject _explosion;
     [SerializeField]
     private GameObject _enemyShield;
+    [SerializeField] 
+    private GameObject _mineBurstPrefab;
     private UIManager _uiManager;
     private SpawnManager _spawnManager;
     private Vector3 _startPosition;
@@ -69,6 +70,7 @@ public class Mothership : MonoBehaviour
         if (transform.position.y <= _destinationY && _moveDown)
         {
             _moveDown = false;
+            Instantiate(_mineBurstPrefab, transform.position, Quaternion.identity); // launch mines at lowest Y position
         }
         if (_moveDown == false && transform.position.y <= _startPosition.y)
         {
@@ -108,7 +110,7 @@ public class Mothership : MonoBehaviour
                 AudioManager.Instance.PlayExplosion();
         }
     }
-    public void ShieldSize()
+    private void ShieldSize()
     {
         _shieldReduce = true;
         _shieldCollider.radius = 1f;                        // reduce collider to ship body

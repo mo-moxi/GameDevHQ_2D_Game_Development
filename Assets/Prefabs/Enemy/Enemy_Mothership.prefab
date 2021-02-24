@@ -125,6 +125,8 @@ MonoBehaviour:
   _explosion: {fileID: 1715853933198099715, guid: 4936e411718d5dae3aaa5072a97b3e40,
     type: 3}
   _enemyShield: {fileID: 166504570250151341}
+  _mineBurstPrefab: {fileID: 1892537738092023307, guid: 33b4ab5f0b3802f509bee2285b23d823,
+    type: 3}
 --- !u!50 &7102017394313620839
 Rigidbody2D:
   serializedVersion: 4

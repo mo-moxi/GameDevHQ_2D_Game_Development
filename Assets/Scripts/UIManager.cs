@@ -19,6 +19,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Image _thrusterSprite;
     [SerializeField]
+    private Image _tripleShot;
+    [SerializeField]
     private Image _sceneFadeImage;
     [SerializeField]
     private Image _playerRadarSprite;
@@ -111,6 +113,10 @@ public class UIManager : MonoBehaviour
     public void ThrusterImage(bool thruster)
     {
         _thrusterSprite.gameObject.SetActive(thruster);
+    }
+    public void TripleShot(bool tshot)
+    {
+        _tripleShot.gameObject.SetActive(tshot);
     }
     public void ShieldLevel(int shieldLevel)
     {
